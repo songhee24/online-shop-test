@@ -1,10 +1,30 @@
-import { IconButton, MenuItem, Modal, Select, styled } from "@mui/material";
+import {
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  styled,
+} from "@mui/material";
 import { ReactComponent as CloseIcon } from "../../assets/close-icon.svg";
 import { ReactComponent as ImageUploadIcon } from "../../assets/image-upload-icon.svg";
 import { Input } from "../../UI/Input";
 import { Button } from "../../UI/Button";
+import { useState } from "react";
 
+const sizesData = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 export const AdminModal = ({ open, onClose }) => {
+  const [sizes, setSizes] = useState([]); // [XS, S, M, L]
+
+  const handleSizeChange = (event) => {
+    const value = event.target.value;
+    setSizes(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
   return (
     <Modal open={open} onClose={onClose}>
       <Content>
@@ -16,9 +36,24 @@ export const AdminModal = ({ open, onClose }) => {
           <Input fullWidth label="Название товара" type="text" />
           <Input fullWidth label="Цена" type="number" />
           <Input fullWidth label="Количество в запасе" type="number" />
-          <Select fullWidth>
-            <MenuItem>XXL</MenuItem>
-          </Select>
+          <FormControl>
+            <InputLabel id="sizes">Доступные размеры</InputLabel>
+            <Select
+              onChange={handleSizeChange}
+              multiple
+              value={sizes}
+              id="sizes"
+              sx={{ color: "black" }}
+              label="Доступные размеры"
+              fullWidth
+            >
+              {sizesData.map((size) => (
+                <MenuItem key={size} value={size}>
+                  {size}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <Input fullWidth label="Цвет" type="text" />
           <Input
             value=""
