@@ -13,7 +13,7 @@ import { Input } from "../../UI/Input";
 import { Button } from "../../UI/Button";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { uploadImage } from "../../api/adminApi";
+import { addProduct, uploadImage } from "../../api/adminApi";
 
 const sizesData = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 export const AdminModal = ({ open, onClose }) => {
@@ -25,7 +25,8 @@ export const AdminModal = ({ open, onClose }) => {
     const inputName = event.target.name; // title / price / color
     setProduct((prevState) => ({
       ...prevState,
-      [inputName]: event.target.value,
+      [inputName]:
+        inputName === "price" ? Number(event.target.value) : event.target.value,
     }));
   };
 
@@ -48,12 +49,16 @@ export const AdminModal = ({ open, onClose }) => {
       const productData = {
         ...product,
         sizes,
+        category: "MALE",
+        dateOfCreation: "2023-09-22",
       };
       const formData = new FormData(); // {}
       formData.set("file", image);
       const imageResult = await uploadImage(formData);
       productData.images = imageResult.data.link;
-      
+
+      await addProduct(productData);
+      onClose();
     } catch (e) {
       toast.error(e.message);
     }
