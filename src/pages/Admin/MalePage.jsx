@@ -16,8 +16,6 @@ export const MalePage = () => {
     return <CircularProgress />;
   }
 
-  console.log(products);
-
   return (
     <>
       {products.map((product) => (

@@ -2,8 +2,11 @@ import { styled } from "@mui/material";
 // import alias
 import { Button } from "../../UI/Button";
 import { useLocation } from "react-router-dom";
+import { AdminModal } from "../../components/Admin/AdminModal";
+import { useState } from "react";
 
 export const AdminHeader = () => {
+  const [openModal, setOpenModal] = useState(false);
   const { pathname } = useLocation();
 
   const titleByPath = {
@@ -13,10 +16,15 @@ export const AdminHeader = () => {
   };
 
   return (
-    <Header>
-      <Title>{titleByPath[pathname]}</Title>
-      <HeaderButton>+ Добавить</HeaderButton>
-    </Header>
+    <>
+      <Header>
+        <Title>{titleByPath[pathname]}</Title>
+        <HeaderButton onClick={() => setOpenModal(true)}>
+          + Добавить
+        </HeaderButton>
+      </Header>
+      <AdminModal open={openModal} onClose={() => setOpenModal(false)} />
+    </>
   );
 };
 
