@@ -3,49 +3,49 @@ import { ReactComponent as EditIcon } from "../../assets/edit-icon.svg";
 import { ReactComponent as RemoveIcon } from "../../assets/remove-icon.svg";
 
 export const AdminCard = ({ product, onDelete, onEdit }) => {
-  <Container>
-    <Header>
-      <HeadTitle>{product.title}</HeadTitle>
-      <IconContainer>
-        <StyledEditIcon onClick={() => onEdit(product.id)} />
-        <StyledDeleteIcon onClick={onDelete} />
-      </IconContainer>
-    </Header>
-    <Content>
-      <FirstBlock>
-        <div>
-          <Image src={product.image} />
-        </div>
-        <div>
-          <Paragraph>Цвета в наличии</Paragraph>
-          <Paragraph>Размеры в наличии</Paragraph>
-        </div>
-        <div>
-          <Paragraph>{product.color}</Paragraph>
-          <Paragraph>{product.sizes}</Paragraph>
-        </div>
-      </FirstBlock>
+  return (
+    <Container>
+      <Header>
+        <HeadTitle>{product.title}</HeadTitle>
+        <IconContainer>
+          <StyledEditIcon onClick={() => onEdit(product.id)} />
+          <StyledDeleteIcon onClick={onDelete} />
+        </IconContainer>
+      </Header>
+      <Content>
+        <FirstBlock>
+          <div>
+            <Image src={product.image} />
+          </div>
+          <div>
+            <Paragraph>Цвета в наличии</Paragraph>
+            <Paragraph>Размеры в наличии</Paragraph>
+          </div>
+          <div>
+            <Paragraph>{product.color}</Paragraph>
+            <Paragraph>{product.sizes}</Paragraph>
+          </div>
+        </FirstBlock>
 
-      <div>
-        <Title>{product.available}</Title>
-        <Paragraph>Запас</Paragraph>
-      </div>
-      <div>
-        <Title>{product.price} Сом</Title>
-        <Paragraph>Цена</Paragraph>
-      </div>
-    </Content>
-  </Container>;
+        <div>
+          <Title>{product.available}</Title>
+          <Paragraph>Запас</Paragraph>
+        </div>
+        <div>
+          <Title>{product.price} Сом</Title>
+          <Paragraph>Цена</Paragraph>
+        </div>
+      </Content>
+    </Container>
+  );
 };
 
-const Container = styled("div")`
-  padding: 20px;
-`;
+const Container = styled("div")``;
+
 const Header = styled("div")`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 70rem;
   height: 54.241px;
   border-radius: 10px;
   background: #fff;
@@ -63,7 +63,6 @@ const IconContainer = styled("div")`
 const Content = styled("div")`
   display: flex;
   justify-content: space-between;
-  width: 70rem;
   height: 170px;
   border-radius: 10px;
   background: #fff;
