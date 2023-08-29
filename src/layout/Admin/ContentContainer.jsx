@@ -5,7 +5,7 @@ export const ContentContainer = ({ children }) => {
 };
 
 const StyledContainer = styled("div")`
-  margin-top: 30px;
+  margin-top: 25px;
   margin-left: 30px;
   margin-right: 30px;
 `;

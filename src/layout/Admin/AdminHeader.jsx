@@ -16,6 +16,7 @@ const Header = styled("header")`
   justify-content: space-between;
   padding: 22px 30px 22px 30px;
   border-radius: 10px;
+  background-color: #fff;
 `;
 
 const Title = styled("h1")`
