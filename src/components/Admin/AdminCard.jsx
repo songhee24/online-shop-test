@@ -40,7 +40,9 @@ export const AdminCard = ({ product, onDelete, onEdit }) => {
   );
 };
 
-const Container = styled("div")``;
+const Container = styled("div")`
+  margin-bottom: 20px;
+`;
 
 const Header = styled("div")`
   display: flex;

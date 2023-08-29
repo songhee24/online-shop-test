@@ -1,24 +1,34 @@
 import { AdminCard } from "../../components/Admin/AdminCard";
+import { useEffect } from "react";
+import { CircularProgress } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductsByCategory } from "../../redux/slices/adminSlice";
 
 export const MalePage = () => {
+  const { isLoading, products } = useSelector((state) => state.admin);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProductsByCategory("MALE"));
+  }, []);
+
+  if (isLoading) {
+    return <CircularProgress />;
+  }
+
+  console.log(products);
+
   return (
     <>
-      <h1>Hello</h1>
-      <AdminCard
-        product={{
-          id: 0,
-          title: "string",
-          price: 0,
-          image: "string",
-          category: "string",
-          sizes: ["string"],
-          color: "string",
-          dateOfCreation: "2023-09-22",
-        }}
-        onDelete={() => {}}
-        onEdit={() => {}}
-        getById={() => {}}
-      />
+      {products.map((product) => (
+        <AdminCard
+          key={product.id}
+          product={product}
+          onDelete={() => {}}
+          onEdit={() => {}}
+          getById={() => {}}
+        />
+      ))}
     </>
   );
 };

@@ -4,11 +4,10 @@ import { ReactComponent as FemaleIcon } from "../../assets/female-icon.svg";
 import { ReactComponent as MaleIcon } from "../../assets/male-icon.svg";
 import { ReactComponent as ChildrenIcon } from "../../assets/children-icon.svg";
 import { Link, useLocation } from "react-router-dom";
+import { isActive } from "../../helpers/global";
 
 export const SideBar = () => {
   const { pathname } = useLocation();
-
-  const isActive = (path) => pathname === `/admin/${path}`;
 
   return (
     <Container>
@@ -17,19 +16,19 @@ export const SideBar = () => {
       </Wrapper>
       <List>
         <StyledLink to={"male"}>
-          <Menu active={isActive("male")}>
+          <Menu active={isActive("male", pathname)}>
             <MaleIcon />
             <MenuTitle>Мужская</MenuTitle>
           </Menu>
         </StyledLink>
         <StyledLink to={"children"}>
-          <Menu active={isActive("children")}>
+          <Menu active={isActive("children", pathname)}>
             <ChildrenIcon />
             <MenuTitle>Детская</MenuTitle>
           </Menu>
         </StyledLink>
         <StyledLink to={"female"}>
-          <Menu active={isActive("female")}>
+          <Menu active={isActive("female", pathname)}>
             <FemaleIcon />
             <MenuTitle>Женская</MenuTitle>
           </Menu>
