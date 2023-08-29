@@ -14,10 +14,7 @@ function App() {
     if (storagedData?.token && storagedData?.role) {
       dispatch(authActions.autoLogin(storagedData));
     }
-    // fake loading
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+    setLoading(false);
   }, []);
 
   if (loading) {
