@@ -16,6 +16,17 @@ import { useState } from "react";
 const sizesData = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 export const AdminModal = ({ open, onClose }) => {
   const [sizes, setSizes] = useState([]); // [XS, S, M, L]
+  const [product, setProduct] = useState({});
+
+  const valueChangeHandler = (event) => {
+    const inputName = event.target.name; // title / price / color
+    setProduct((prevState) => ({
+      ...prevState,
+      [inputName]: event.target.value,
+    }));
+  };
+
+  console.log(product);
 
   const handleSizeChange = (event) => {
     const value = event.target.value;
@@ -33,9 +44,21 @@ export const AdminModal = ({ open, onClose }) => {
           <CloseIcon />
         </TitleSection>
         <Form>
-          <Input fullWidth label="Название товара" type="text" />
-          <Input fullWidth label="Цена" type="number" />
-          <Input fullWidth label="Количество в запасе" type="number" />
+          <Input
+            fullWidth
+            label="Название товара"
+            type="text"
+            name="title"
+            onChange={valueChangeHandler}
+          />
+          <Input
+            fullWidth
+            label="Цена"
+            type="number"
+            name="price"
+            onChange={valueChangeHandler}
+          />
+          {/* <Input fullWidth label="Количество в запасе" type="number" /> */}
           <FormControl>
             <InputLabel id="sizes">Доступные размеры</InputLabel>
             <Select
@@ -54,7 +77,13 @@ export const AdminModal = ({ open, onClose }) => {
               ))}
             </Select>
           </FormControl>
-          <Input fullWidth label="Цвет" type="text" />
+          <Input
+            fullWidth
+            label="Цвет"
+            type="text"
+            name="color"
+            onChange={valueChangeHandler}
+          />
           <Input
             value=""
             fullWidth
