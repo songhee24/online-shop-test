@@ -10,3 +10,12 @@ export const uploadImage = async (image) => {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
+
+export const addProduct = async (product) => {
+  const { token } = JSON.parse(localStorage.getItem("clientData"));
+  return await axios.post(`${BASE_URL}/products`, product, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
