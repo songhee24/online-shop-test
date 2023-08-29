@@ -12,10 +12,13 @@ import { ReactComponent as ImageUploadIcon } from "../../assets/image-upload-ico
 import { Input } from "../../UI/Input";
 import { Button } from "../../UI/Button";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { uploadImage } from "../../api/adminApi";
 
 const sizesData = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 export const AdminModal = ({ open, onClose }) => {
   const [sizes, setSizes] = useState([]); // [XS, S, M, L]
+  const [image, setImage] = useState(null);
   const [product, setProduct] = useState({});
 
   const valueChangeHandler = (event) => {
@@ -26,14 +29,34 @@ export const AdminModal = ({ open, onClose }) => {
     }));
   };
 
-  console.log(product);
-
   const handleSizeChange = (event) => {
     const value = event.target.value;
     setSizes(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+  };
+
+  const imageChangeHandler = (event) => {
+    const file = event.target.files[0]; // {name: 'akshd'}
+    setImage(file);
+  };
+
+  const submitHandler = async (event) => {
+    try {
+      event.preventDefault();
+      const productData = {
+        ...product,
+        sizes,
+      };
+      const formData = new FormData(); // {}
+      formData.set("file", image);
+      const imageResult = await uploadImage(formData);
+      productData.images = imageResult.data.link;
+      
+    } catch (e) {
+      toast.error(e.message);
+    }
   };
 
   return (
@@ -43,7 +66,7 @@ export const AdminModal = ({ open, onClose }) => {
           <h2>Добавить новую позицию</h2>
           <CloseIcon />
         </TitleSection>
-        <Form>
+        <Form onSubmit={submitHandler}>
           <Input
             fullWidth
             label="Название товара"
@@ -97,16 +120,17 @@ export const AdminModal = ({ open, onClose }) => {
                     style={{ display: "none" }}
                     type="file"
                     hidden
-                    // onChange={handleUpload}
+                    onChange={imageChangeHandler}
                     name="[licenseFile]"
                   />
                 </IconButton>
               ),
             }}
           />
+          {image ? <p>{image.name}</p> : null}
           <ButtonsContainer>
             <CancelButton>Отменить</CancelButton>
-            <ConfirmButton>Сохранить</ConfirmButton>
+            <ConfirmButton type="submit">Сохранить</ConfirmButton>
           </ButtonsContainer>
         </Form>
       </Content>
