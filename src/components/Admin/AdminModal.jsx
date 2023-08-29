@@ -14,12 +14,15 @@ import { Button } from "../../UI/Button";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { addProduct, uploadImage } from "../../api/adminApi";
+import { useDispatch } from "react-redux";
+import { getProductsByCategory } from "../../redux/slices/adminSlice";
 
 const sizesData = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
-export const AdminModal = ({ open, onClose }) => {
+export const AdminModal = ({ open, onClose, selectedCategory }) => {
   const [sizes, setSizes] = useState([]); // [XS, S, M, L]
   const [image, setImage] = useState(null);
   const [product, setProduct] = useState({});
+  const dispatch = useDispatch();
 
   const valueChangeHandler = (event) => {
     const inputName = event.target.name; // title / price / color
@@ -49,15 +52,16 @@ export const AdminModal = ({ open, onClose }) => {
       const productData = {
         ...product,
         sizes,
-        category: "MALE",
-        dateOfCreation: "2023-09-22",
+        category: selectedCategory,
+        dateOfCreation: new Date().toISOString(),
       };
       const formData = new FormData(); // {}
       formData.set("file", image);
       const imageResult = await uploadImage(formData);
       productData.images = imageResult.data.link;
-
       await addProduct(productData);
+      dispatch(getProductsByCategory(selectedCategory));
+      toast.success("Продукт успешно создан!");
       onClose();
     } catch (e) {
       toast.error(e.message);

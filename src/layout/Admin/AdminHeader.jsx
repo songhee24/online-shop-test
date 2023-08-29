@@ -15,6 +15,12 @@ export const AdminHeader = () => {
     "/admin/children": "Детская",
   };
 
+  const categoryByPath = {
+    "/admin/female": "FEMALE",
+    "/admin/male": "MALE",
+    "/admin/children": "CHILDREN",
+  };
+
   return (
     <>
       <Header>
@@ -23,7 +29,11 @@ export const AdminHeader = () => {
           + Добавить
         </HeaderButton>
       </Header>
-      <AdminModal open={openModal} onClose={() => setOpenModal(false)} />
+      <AdminModal
+        selectedCategory={categoryByPath[pathname]}
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+      />
     </>
   );
 };
