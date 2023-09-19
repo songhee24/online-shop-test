@@ -16,4 +16,7 @@ const StyledButton = styled(MuiButton)({
   "&:hover": {
     backgroundColor: "#2a2b2d",
   },
+  "&:disabled": {
+    backgroundColor: "#808285",
+  },
 });
